@@ -1,15 +1,18 @@
 server {
     listen 80 ;
     listen [::]:80 ssl ipv6only=on;
-	listen 443 ssl;
-	listen [::]:443 ssl ipv6only=on;
-	
+    listen 443 ssl;
+    listen [::]:443 ssl ipv6only=on;
+    
 
-    server_name ghost.i-zyx.com; # Replace with your domain
-	ssl on;
-	ssl_certificate /etc/nginx/sites-available/ssl.crt;
-    ssl_certificate_key /etc/nginx/sites-available/ssl.key;
-	error_page 497  https://$host$uri$args;
+    server_name i-zyx.com www.i-zyx.com; # Replace with your domain
+    ssl on;
+    ssl_certificate /etc/nginx/ssl/ssl.crt;
+    ssl_certificate_key /etc/nginx/ssl/ssl.key;
+    error_page 497  https://$host$uri$args;
+    if ($host = 'www.i-zyx.com' ) {
+rewrite ^/(.*)$ https://i-zyx.com/$1 permanent;
+    }
     root /usr/share/nginx/html;
     index index.html index.htm;
 
